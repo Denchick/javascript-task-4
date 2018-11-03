@@ -6,12 +6,19 @@
  */
 const isStar = true;
 
+
+var events = new Map();
+const getEventsForUnsubscribe(event) => {
+    
+}
+
 /**
  * Возвращает новый emitter
  * @returns {Object}
  */
 function getEmitter() {
     return {
+
 
         /**
          * Подписаться на событие
@@ -21,6 +28,7 @@ function getEmitter() {
          */
         on: function (event, context, handler) {
             console.info(event, context, handler);
+            events.set(event, { context: context, handler: handler });
         },
 
         /**
@@ -30,6 +38,11 @@ function getEmitter() {
          */
         off: function (event, context) {
             console.info(event, context);
+            getEventsForUnsubscribe(event).forEach(item => {
+                if (events.get(item) !== undefined) {
+                    events.delete(item);
+                }
+            })
         },
 
         /**
@@ -38,6 +51,10 @@ function getEmitter() {
          */
         emit: function (event) {
             console.info(event);
+            getEventsForEmit(event).forEach(item => {
+                const { context, handler } = events(item);
+                handler.call(context);
+            });
         },
 
         /**
