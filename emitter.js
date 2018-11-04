@@ -103,8 +103,8 @@ function getEmitter() {
                         const { context, handler, counter, condition } = i;
                         if (condition(counter)) {
                             handler.call(context);
-                            i.counter += 1;
                         }
+                        i.counter += 1;
                     });
                 }
             });
@@ -122,7 +122,7 @@ function getEmitter() {
          * @returns {Object} emitter
          */
         several: function (event, context, handler, times) {
-            console.info(event, context, handler, times);
+            // console.info(event, context, handler, times);
             subscribeOnEvent(event, context, handler, count => count < times);
 
             return this;
@@ -138,7 +138,7 @@ function getEmitter() {
          * @returns {Object} emitter
          */
         through: function (event, context, handler, frequency) {
-            console.info(event, context, handler, frequency);
+            // console.info(event, context, handler, frequency);
             subscribeOnEvent(event, context, handler, count => count % frequency === 0);
 
             return this;
