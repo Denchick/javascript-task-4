@@ -72,14 +72,11 @@ function getEmitter() {
          * @returns {Object} emitter
          */
         off: function (event, context) {
-            const contextAreEqual = (one, another) => {
-                return one.focus === another.focus && one.wisdom === another.wisdom;
-            };
             // console.info(event, context);
             getEventsForOff(event).forEach(element => {
                 if (events.has(element)) {
                     events.set(element, events.get(element)
-                        .filter(current => !contextAreEqual(current.context, context)));
+                        .filter(current => current.context !== context));
                 }
             });
 
