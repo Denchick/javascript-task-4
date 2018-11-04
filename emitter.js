@@ -40,6 +40,11 @@ function getEmitter() {
         events.get(event).push(eventObj);
     };
 
+    const getEventsForOff = event => {
+        return [...events.keys()]
+            .filter(x => x === event || x.startsWith(event + '.'));
+    };
+
     return {
 
         /**
@@ -70,14 +75,11 @@ function getEmitter() {
             const contextAreEqual = (one, another) => {
                 return one.focus === another.focus && one.wisdom === another.wisdom;
             };
-
-            const eventsForDelete = [...events.keys()]
-                .filter(e => e === event || e.startsWith(event + '.'));
-
-            eventsForDelete(event).forEach(element => {
-                let elementObjArray = events.get(element);
-                if (elementObjArray !== undefined) {
-                    events.set(element, elementObjArray
+            // console.info(event, context);
+            getEventsForOff(event).forEach(element => {
+                let eventObjArray = events.get(element);
+                if (eventObjArray !== undefined) {
+                    events.set(element, eventObjArray
                         .filter(current => !contextAreEqual(current.context, context)));
                 }
             });
