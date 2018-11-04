@@ -77,9 +77,8 @@ function getEmitter() {
             };
             // console.info(event, context);
             getEventsForOff(event).forEach(element => {
-                let eventObjArray = events.get(element);
-                if (eventObjArray !== undefined) {
-                    events.set(element, eventObjArray
+                if (events.has(element)) {
+                    events.set(element, events.get(element)
                         .filter(current => !contextAreEqual(current.context, context)));
                 }
             });
